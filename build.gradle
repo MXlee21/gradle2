@@ -49,22 +49,12 @@ task createZip(type: Zip) {
 
 task pushToGitHub(type: Exec) {
     workingDir 'build'
-    // Initialize git
-    commandLine 'git', 'init'
-    exec()
-    // Add all files
-    commandLine 'git', 'add', '.'
-    exec()
-    // Commit the changes
-    commandLine 'git', 'commit', '-m', 'Automated deployment'
-    exec()
-    // Set the branch name
-    commandLine 'git', 'branch', '-M', 'main'
-    exec()
-    // Add the remote repository
-    commandLine 'git', 'remote', 'add', 'origin','https://github.com/MXLee21/gradle2.git'
-    exec()
-    // Push to the remote repository
-    commandLine 'git', 'push', '-u', 'origin', 'main'
-    exec()
+    commandLine 'sh', '-c', '''
+        git init
+        git add .
+        git commit -m "Automated deployment"
+        git branch -M master
+        git remote add origin https://github.com/MXlee21/gradle2.git
+        git push -u origin main
+    '''
 }
